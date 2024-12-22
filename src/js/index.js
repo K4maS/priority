@@ -1,73 +1,10 @@
 import '../styles/styles.scss';
 import $ from 'jquery';
 import { titles, articles } from './data';
-
-function createBear(num, zindex = 0) {
-    return $( `<picture class="banner__img img hero-bear hero-bear${num}" style="z-index: ${zindex}">
-        <source class="img__source" srcset="./img/mobile/hero-bear${num}.png" media="(max-width: 374px)" />
-        <source class="img__source" srcset="./img/small_tablet/hero-bear${num}.png" media="(max-width: 1023px)" />
-        <source class="img__source" srcset="./img/tablet/hero-bear${num}.png" media="(max-width:1399px)" />
-        <img class="img__source" src="./img/desktop/hero-bear${num}.png" alt="Медведь ${num}" />
-    </picture>`);
-};
-
-function createArticleItem(data) {
-    return $( `<li class="achievements__item item">
-                    <img src="${data.img}" alt="" class="item__img">
-                    <div class="item__text-block">
-                    <h3 class="item__title sub-title">
-                         ${data.title}
-                    </h3>
-                    <p class="item__descr">
-                         ${data.descr}
-                    </p>
-                        <div class="item__btn-block">
-                            <button class="item__btn btn">
-                                Забота о каждом нуждающемся
-                            </button>
-                            <button class="btn gray item__likes ${data.likeStatus} ${data.color} ${data.likeStatus ? 'liked': ''}">
-                               ${data.likes > 0 ? ` <span>${data.likes}</span>` : ''}
-                            </button>
-                        </div>
-                    </div>
-                </li>`
-            );
-};
+import { createArticleItem, createBear, createDropdownBtns } from './createComponents';
 
 const activeElems = [];
-
-function createDropdownBtns({title, index}) {
-    const btn =  $(`
-        <button class="list__item btn gray bear${index}">${title}  <button class="delete-btn"></button>
-           
-        </button>`
-    );
-    btn.on('click', (e)=> {
-        $('.hero-bear').each((ind, elem)=> {
-            const jElem = $(elem);
-            jElem.removeClass('transporent');
-            if(index == 0) {
-                jElem.removeClass('transporent');
-            }
-            else {
-                if(!activeElems.includes(index)){
-                    activeElems.push(index);
-                } 
-                if(!activeElems.includes(ind)){
-                    jElem.addClass('transporent');
-                }
-            }
-        });
-        btn.find('.delete-btn').addClass('active');
-        const newBtn = $(e.target).removeClass('gray').append('');
-        console.log(newBtn)
-        // $('.banner__btn-block').append(newBtn);
-    })
-
-    $('.delete-btn').on('click', )
-
-    return btn;
-};
+let activeTitles = titles;
 
 const activeteDorpdown = (event)=>{
     const list = $(event.target).parent().find('.directions-list');
@@ -83,24 +20,91 @@ const activeteDorpdown = (event)=>{
         dropdownArrow.removeClass('active');
         blackout.removeClass('active');
     });
-
 };
 
-titles.forEach(({zindex, title}, index)=>{
-    if(index !== 0) {
-         $('.bears_place').append(createBear(index, zindex));
-    }
-   
-    $('.directions-list').append(createDropdownBtns({title, index}));
-});
-
-let i = 3;
-while(i > 0) {
-    i--;
-    articles.forEach((elem, index)=>{
-        $('.achievements-list').append(createArticleItem(elem));
-   });
+const actionOnClick = (e, index) => {
+    activeTitles = activeTitles.map((e, i) => {
+        if(index == i) {
+            e.active = true;
+        }
+        else if(index == 0) {
+            e.active = true;
+        }
+        return e;
+    });
+    updateDirections(activeTitles);
 }
 
+const actionOnRemoveClick = (e, index) => {
+    let newObj = activeTitles.map((e, i) => {
+    
+        if(index == i) {
+            e.active = false;
+        }
+        else if(index == 0) {
+            e.active = true;
+        }
+
+        return e;
+    });
+    console.log(newObj);
+
+    updateDirections(newObj);
+}
+
+
+
+const updateDirections = (activeTitles, type = 'add') => {
+    let activeBears = activeTitles.filter((elem)=> elem.active === true).map((elem)=> elem.id );
+    $(`.hero-bear`).addClass('transporent');
+    $(`.directions-list .list-btn`).addClass('gray');
+    $(`.directions-list  .list-btn .delete-btn`).removeClass('active');
+    $('.directions-active-list').empty();
+
+    titles.forEach(({title, active}, index )=>{
+    // let activeBearsStatus = activeBears.length > 0 ? active : true;
+
+            if(activeBears.includes(index)) {
+                if(index !== 0) {
+                    $(`.hero-bear${index}`).removeClass('transporent');
+                }
+                $(`.bear${index}`).removeClass('gray');
+                $(`.bear${index} .delete-btn`).addClass('active');
+                $('.directions-active-list').append(createDropdownBtns({title, index, active, actionOnClick, actionOnRemoveClick}));
+
+            }
+    });
+}
+
+
+
+const mountDirections = (titles) => {
+    $('.directions-list').empty();
+    let activeBears = activeTitles.filter((elem)=> elem.active === true);
+
+    titles.forEach(({zindex, title, active}, index)=>{
+    let activeBearsStatus = activeBears.length > 0 ? active : true;
+        
+    if(index !== 0) {
+            $(`.hero-bear${index}`).remove();
+            $('.bears_place').append(createBear({index, zindex, activeBearsStatus}));
+    }
+    $('.directions-list').append(createDropdownBtns({title, index, active, actionOnClick, actionOnRemoveClick}));
+    });
+}
+
+
+function renderAchievementsList () {
+    let i = 3;
+    while(i > 0) {
+        i--;
+        articles.forEach((elem, index)=>{
+            $('.achievements-list').append(createArticleItem(elem));
+    });
+    }
+}
+
+mountDirections(activeTitles);
+renderAchievementsList();
 
 $('.dropdown-btn').on('click', activeteDorpdown);

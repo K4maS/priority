@@ -76,6 +76,7 @@ img {
   display: flex;
   align-items: center;
   gap: 8px;
+  transition: all 0.5s linear;
 }
 
 .btn.white {
@@ -95,17 +96,19 @@ img {
 .delete-btn {
   background-color: transparent;
   border: none;
-  width: 6px;
   height: 6px;
   background-image: url('../img/ico-cross.svg');
   background-repeat: no-repeat;
   background-position: center;
   display: none;
   cursor: pointer;
+  width: 0;
+  transition: width 0.5s linear;
 }
 
 .delete-btn.active {
   display: block;
+  width: 6px;
 }
 
 .header {
@@ -184,28 +187,30 @@ img {
   margin-bottom: 32px;
 }
 
-.transporent {
-  opacity: 0.8;
-}
+
 
 .banner__img {
-  // height: 100%;
   width: 100%;
   position: absolute;
   bottom: -4px;
+  opacity: 1;
+  transition: opacity 0.3s linear;
+}
+
+.banner__img.transporent {
+  opacity: 0.1;
 }
 
 .img__source {
-  // height: 100%;
   width: 100%;
-
 }
 
 .banner__btn-block {
   position: relative;
   display: flex;
+  align-items: start;
   gap: 8px;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .directions__dropdown {
@@ -230,6 +235,14 @@ img {
   rotate: 0deg;
 }
 
+.directions__active-list {
+  display: flex;
+  align-items: start;
+  gap: 8px;
+  flex-wrap: wrap;
+  transition: height 0.5s linear;
+}
+
 .directions__list {
   z-index: 11;
   top: 49px;
@@ -246,6 +259,8 @@ img {
   transition: height linear 1.3s;
   box-shadow: 0px 4px 10px 0px #0000001A;
 }
+
+
 
 .directions__list.active {
   height: unset;
@@ -304,6 +319,13 @@ img {
   &__title {
     margin-bottom: 8px;
     line-height: 119%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    /* number of lines to show */
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   &__descr {
@@ -311,7 +333,12 @@ img {
     font-weight: 400;
     margin-bottom: auto;
     line-height: 119%;
-
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 5;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
 
   &__btn-block {
@@ -331,6 +358,9 @@ img {
     gap: 4px;
 
     &::before {
+      background-image: url('../img/Ico-thumb.svg');
+      background-repeat: no-repeat;
+      background-position: center;
       content: '';
       width: 24px;
       height: 24px;
@@ -343,6 +373,26 @@ img {
       margin-right: 4px;
     }
   }
+  &__likes.blue1 {
+    &::before {
+      background-color: #00AEEF;
+    }
+  }
+
+  &__likes.blue2 {
+    &::before {
+      background-image: url('../img/Ico-thumb-black.svg');
+      background-color: #ADD6FF;
+    }
+  }
+
+  &__likes.liked {
+    &::before {
+      background-color: #2E4EA4;
+    }
+  }
+
+ 
 }
 
 
@@ -441,4 +491,172 @@ img {
   justify-content: center;
   color: #fff;
   padding-top: 22px;
+}
+
+@media (max-width: 1399px) {
+  .container {
+    max-width: 984px;
+  }
+
+  .header__nav {
+    .nav__link:nth-child(1) {
+      order: 1;
+    }
+
+  }
+
+
+  .item {
+    min-height: 460px;
+
+    &__btn-block {
+      flex-direction: column;
+      align-items: start;
+      gap: 8px;
+    }
+  }
+
+  .quiz::after {
+    right: 54px;
+  }
+
+  .video {
+    min-height: 329px;
+
+    &__left {
+      padding: 29px 0px 21px 20px;
+
+      &::after {
+        right: -29px;
+        bottom: -24px;
+        background-size: 79%;
+      }
+
+      .btn {
+        font-size: 12px;
+        padding: 6px 12px;
+      }
+    }
+
+    .title {
+      font-size: 28px;
+    }
+  }
+
+  .footer {
+    padding-top: 3px;
+  }
+}
+
+@media (max-width: 1023px) {
+  .container {
+    max-width: 728px;
+  }
+
+  .title {
+    font-size: 24px;
+  }
+
+  .sub-title {
+    font-size: 16px;
+  }
+
+  .header {
+    margin-bottom: 16px;
+  }
+
+  .section__nav {
+    margin-bottom: 38px;
+  }
+
+  .main__title {
+    margin-bottom: 17px;
+  }
+
+  .banner {
+    margin-bottom: 33px;
+  }
+
+  .banner__bears {
+    height: 195px;
+
+    margin-bottom: 16px;
+
+  }
+
+  .achievements {
+    margin-bottom: 64px;
+  }
+
+  .achievements__title-block {
+    margin-bottom: 16px;
+  }
+
+  .achievements__list {
+    grid-template-columns: repeat(2, 1fr);
+    margin-bottom: 16px;
+  }
+
+  .achievements__btn-block .btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  .item {
+    min-height: 427px;
+  }
+
+  .item__img {
+    height: 160px;
+  }
+
+  .quiz {
+    min-height: 216px;
+    padding: 30px 33px 34px 34px;
+    overflow: hidden;
+    margin-bottom: 63px;
+
+    .title {
+      font-size: 32px;
+    }
+
+    &::after {
+      background-size: 88%;
+      right: 8px;
+      bottom: -32px;
+    }
+  }
+
+  .video {
+    flex-direction: column;
+    margin-bottom: 62px;
+    &__left {
+      min-height: 209px;
+    }
+
+    &__content {
+      min-height: 330px;
+    }
+    &__left::after {
+      right: 3px;
+      bottom: -39px;
+      background-size: 73%;
+  }
+  }
+
+  .footer {
+    min-height: 280px;
+  }
+}
+
+@media (max-width: 767px) {
+  .container {
+    max-width: 340px;
+  }
+
+  .achievements__list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+
 }

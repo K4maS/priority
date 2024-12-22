@@ -1,22 +1,22 @@
 
 export const titles = [
-    {zindex: 0, title: 'Все направления'},
-    {zindex: 2, title: 'Забота о каждом нуждающемся'},
-    {zindex: 1, title: 'Развитие регионов и транспортной инфраструктуры страны'},
-    {zindex: 3, title: 'Культура, история, традиции'},
-    {zindex: 4, title: 'Образование и передовая наука'},
-    {zindex: 3, title: 'Развитие села'},
-    {zindex: 3, title: 'Крепкая семья'},
-    {zindex: 3, title: 'Экология для жизни'},
-    {zindex: 2, title: 'Разитие туризма'},
-    {zindex: 2, title: 'Развитие новых регионов'},
-    {zindex: 2, title: 'Государство для человека'},
-    {zindex: 1, title: 'Внешняя и оборонная политика'},
-    {zindex: 0, title: 'Здоровье человека'},
-    {zindex: 0, title: 'Экономика развития'},
-    {zindex: 1, title: 'Гражданская солидарность и молодежная политика'},
-    {zindex: 0, title: 'Хорошая работа — достаток в доме'},
-    {zindex: 0, title: 'Удобная и комфортная жизнь'},
+    {id: 0, active: false, zindex: 0, title: 'Все направления'},
+    {id: 1, active: false, zindex: 2, title: 'Забота о каждом нуждающемся'},
+    {id: 2, active: false, zindex: 1, title: 'Развитие регионов и транспортной инфраструктуры страны'},
+    {id: 3, active: false, zindex: 3, title: 'Культура, история, традиции'},
+    {id: 4, active: false, zindex: 4, title: 'Образование и передовая наука'},
+    {id: 5, active: false, zindex: 3, title: 'Развитие села'},
+    {id: 6, active: false, zindex: 3, title: 'Крепкая семья'},
+    {id: 7, active: false, zindex: 3, title: 'Экология для жизни'},
+    {id: 8, active: false, zindex: 2, title: 'Разитие туризма'},
+    {id: 9, active: false, zindex: 2, title: 'Развитие новых регионов'},
+    {id: 10, active: false, zindex: 2, title: 'Государство для человека'},
+    {id:11, active: false, zindex: 1, title: 'Внешняя и оборонная политика'},
+    {id: 12, active: false, zindex: 0, title: 'Здоровье человека'},
+    {id: 13, active: false, zindex: 0, title: 'Экономика развития'},
+    {id: 14, active: false, zindex: 1, title: 'Гражданская солидарность и молодежная политика'},
+    {id: 15, active: false, zindex: 0, title: 'Хорошая работа — достаток в доме'},
+    {id: 16, active: false, zindex: 0, title: 'Удобная и комфортная жизнь'},
 ];
 
 export const articles = [
@@ -43,6 +43,6 @@ export const articles = [
         descr: 'Установлены дополнительные гарантии трудоустройства людей с инвалидностью: обязанность работодателя будет считаться выполненной только после трудоустройства инвалида.',
         likeStatus: false,
         likes: 0,
-        color: 'blue3',
+        color: 'blue2',
     }
 ];

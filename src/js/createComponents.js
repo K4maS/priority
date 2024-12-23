@@ -23,12 +23,17 @@ export function createArticleItem(data) {
 
 
 export function createBear({index: num, active=true, zindex = 0}) {
-    return $( `<picture class="banner__img img hero-bear hero-bear${num} ${!active ? 'transporent' : ''}"    style="z-index: ${zindex}">
-        <source class="img__source" srcset="./img/mobile/hero-bear${num}.png"  loading="lazy" media="(max-width: 767px)" />
-        <source class="img__source" srcset="./img/small_tablet/hero-bear${num}.png"  loading="lazy" media="(max-width: 1023px)" />
-        <source class="img__source" srcset="./img/tablet/hero-bear${num}.png"  loading="lazy" media="(max-width:1399px)" />
-        <img class="img__source" src="./img/desktop/hero-bear${num}.png"  loading="lazy" alt="Медведь ${num}" />
-    </picture>`);
+    return $( 
+        ` <picture class="banner__img img hero-bear hero-bear${num} ${!active ? 'transparent' : ''}" style="z-index: ${zindex}">
+            <source class="img__source" srcset="./img/mobile/hero-bear${num}.webp" loading="lazy" media="(max-width: 767px)" type="image/webp" />
+            <source class="img__source" srcset="./img/mobile/hero-bear${num}.png" loading="lazy" media="(max-width: 767px)" type="image/jpeg />
+            <source class="img__source" srcset="./img/small_tablet/hero-bear${num}.webp" loading="lazy" media="(max-width: 1023px)" type="image/webp" />
+            <source class="img__source" srcset="./img/small_tablet/hero-bear${num}.png" loading="lazy" media="(max-width: 1023px)" type="image/jpeg />
+            <source class="img__source" srcset="./img/tablet/hero-bear${num}.webp" loading="lazy" media="(max-width: 1399px)" type="image/webp" />
+            <source class="img__source" srcset="./img/tablet/hero-bear${num}.png" loading="lazy" media="(max-width: 1399px)" type="image/jpeg />
+            <source class="img__source" srcset="./img/desktop/hero-bear${num}.webp" loading="lazy" type="image/webp" />
+            <img class="img__source" src="./img/desktop/hero-bear${num}.png" loading="lazy" alt="Медведь ${num}" />
+        </picture>`);
 };
 
 

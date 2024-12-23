@@ -2,9 +2,16 @@ import '../styles/styles.scss';
 import $ from 'jquery';
 import { titles, articles } from './data';
 import { createArticleItem, createBear, createDropdownBtns } from './createComponents';
+import { gsap } from 'gsap';
 
-const activeElems = [];
 let activeTitles = titles;
+
+document.addEventListener("DOMContentLoaded", function() {
+    gsap.fromTo('.directions-list',
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 1, stagger: 0.2 }
+    );
+});
 
 const activeteDorpdown = (event)=>{
     const list = $(event.target).parent().find('.directions-list');
@@ -22,60 +29,51 @@ const activeteDorpdown = (event)=>{
     });
 };
 
-const actionOnClick = (e, index) => {
+const clickAction = (event, index, activeStatus) => {
+    event.stopPropagation();
     activeTitles = activeTitles.map((e, i) => {
-        if(index == i) {
-            e.active = true;
+        if(index == 0) {
+           return {...e, active: activeStatus};
+        } else if(index === i) {
+           return {...e, active: activeStatus};
         }
-        else if(index == 0) {
-            e.active = true;
-        }
-        return e;
+           return e; 
     });
+    console.log(activeTitles);
     updateDirections(activeTitles);
 }
 
-const actionOnRemoveClick = (e, index) => {
-    let newObj = activeTitles.map((e, i) => {
-    
-        if(index == i) {
-            e.active = false;
-        }
-        else if(index == 0) {
-            e.active = true;
-        }
+const actionOnClick = (event, index) => {
+    clickAction(event, index, true);
+}
 
-        return e;
-    });
-    console.log(newObj);
-
-    updateDirections(newObj);
+const actionOnRemoveClick = (event, index) => {
+    clickAction(event, index, false);
 }
 
 
 
-const updateDirections = (activeTitles, type = 'add') => {
+const updateDirections = (activeTitles) => {
     let activeBears = activeTitles.filter((elem)=> elem.active === true).map((elem)=> elem.id );
     $(`.hero-bear`).addClass('transporent');
     $(`.directions-list .list-btn`).addClass('gray');
     $(`.directions-list  .list-btn .delete-btn`).removeClass('active');
     $('.directions-active-list').empty();
 
-    titles.forEach(({title, active}, index )=>{
-    // let activeBearsStatus = activeBears.length > 0 ? active : true;
 
+    titles.forEach(({title, active}, index )=>{
+            let activeBearsStatus = activeBears.length > 0 ? active : true;
+            console.log(activeBearsStatus)
             if(activeBears.includes(index)) {
-                if(index !== 0) {
+                if( activeBearsStatus || index !== 0) {
                     $(`.hero-bear${index}`).removeClass('transporent');
                 }
                 $(`.bear${index}`).removeClass('gray');
                 $(`.bear${index} .delete-btn`).addClass('active');
-                $('.directions-active-list').append(createDropdownBtns({title, index, active, actionOnClick, actionOnRemoveClick}));
-
+                $('.directions-active-list').append(createDropdownBtns({title, index, active: true, actionOnClick, actionOnRemoveClick}));
             }
     });
 }
-
 
 
 const mountDirections = (titles) => {
@@ -98,7 +96,7 @@ function renderAchievementsList () {
     let i = 3;
     while(i > 0) {
         i--;
-        articles.forEach((elem, index)=>{
+        articles.forEach((elem)=>{
             $('.achievements-list').append(createArticleItem(elem));
     });
     }

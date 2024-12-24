@@ -11,6 +11,6 @@ git init
 git add -A
 git commit -m 'deploy'
 
-# git push -f https://github.com/K4maS/[rep] master:gh-pages
+git push -f https://github.com/K4maS/priority master:gh-pages
 
 cd -

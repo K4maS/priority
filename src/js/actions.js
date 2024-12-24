@@ -11,7 +11,6 @@ export const actionOnRemoveClick = (event, index) => {
     clickAction(event, index, false);
 }
 
-
 export const clickAction = (event, index, activeStatus) => {
     event.stopPropagation();
     activeTitles = activeTitles.map((e, i) => {
@@ -25,7 +24,6 @@ export const clickAction = (event, index, activeStatus) => {
 
     updateDirections(activeTitles);
 }
-
 
 export const activeteDorpdown = (event)=>{
     const list = $(event.target).parent().find('.directions-list');
@@ -43,4 +41,6 @@ export const activeteDorpdown = (event)=>{
     });
 };
 
-
+export function dropDownClick() {
+    $('.dropdown-btn').on('click', activeteDorpdown);
+}
